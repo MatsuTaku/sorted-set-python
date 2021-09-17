@@ -1,3 +1,4 @@
+![unit test](https://github.com/MatsuTaku/sorted-set-python/actions/workflows/main.yml/badge.svg)
 # sorted-set-python
 Sorted-Set implementations based on Skiplist and Treap
 
