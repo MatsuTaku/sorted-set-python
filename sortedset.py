@@ -13,14 +13,13 @@ def pickHeight():
 class SkiplistNode:
   def __init__(self, x, height):
     self.x = x
-    self.height = height
-    self.next = [None] * (self.height+1)
+    self.next = [None] * (height+1)
 
 class SkiplistSet:
   def __init__(self):
     self.sentinel = SkiplistNode(None, MAX_HEIGHT) # 番兵ノード
     self.h = 0
-    self.stack = [self.sentinel] * MAX_HEIGHT
+    self.stack = [self.sentinel] * (MAX_HEIGHT+1)
     self.length = 0
 
   def __len__(self):
@@ -59,12 +58,14 @@ class SkiplistSet:
       if u.next[r] is not None and u.next[r].x == x:
         return
       self.stack[r] = u
-    w = SkiplistNode(x, pickHeight())
-    if self.h < w.height:
-      self.h = w.height
-    for i in range(w.height+1):
-      w.next[i] = self.stack[i].next[i]
-      self.stack[i].next[i] = w
+    w_h = pickHeight()
+    w = SkiplistNode(x, w_h)
+    if self.h < w_h:
+      self.h = w_h
+    for r in range(w_h+1):
+      v = self.stack[r]
+      w.next[r] = v.next[r]
+      v.next[r] = w
     self.length += 1
 
   def remove(self, x):
